@@ -1,3 +1,19 @@
-# Заключительное задание первого модуля
+## How to start the project:
 
-Ваша задача в этом уроке — загрузить данные в Elasticsearch из PostgreSQL. Подробности задания в папке `etl`.
+Create and set env according to example.env in root directory.
+
+### Run docker-compose with this command:
+```
+docker-compose up --build
+```
+or background mode:
+```
+docker-compose up --build -d
+```
+
+When you initialize the project, it will automatically load data from Sqlite into Postgres, migrate to Django, and set up a superuser. After that the ETL process (transform, extract, load) will start, data will transfer from Postgres to Elasticsearch.
+
+### To check the result:
+- Full-text search for movies - http://127.0.0.1:9200/movies/_search
+- Opening an administrative site - http://127.0.0.1:80/admin/
+- Django API - http://127.0.0.1:80/api/v1/movies/
