@@ -12,15 +12,21 @@ from state import State, JsonFileStorage
 
 @backoff(elasticsearch.exceptions.ConnectionError)
 @backoff(psycopg2.OperationalError)
-def etl(logger: logging.Logger, extractor: PostgresExtractor, transformer: DataTransform, state: State, loader: ElasticsearchLoader) -> None:
+def etl(
+    logger: logging.Logger,
+    extractor: PostgresExtractor,
+    transformer: DataTransform,
+    state: State,
+    loader: ElasticsearchLoader,
+) -> None:
     """Extracting, transforming and loading data"""
 
     start_timestamp = datetime.now()
-    modified = state.get_state('modified')
-    logger.info(f'Last sync {modified}')
+    modified = state.get_state("modified")
+    logger.info(f"Last sync {modified}")
     params = modified or datetime.min
 
     for extracted_part in extractor.extract(params):
         data = transformer.transform(extracted_part)
         loader.load(data)
-        state.set_state('modified', str(start_timestamp))
+        state.set_state("modified", str(start_timestamp))

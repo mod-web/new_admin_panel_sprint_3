@@ -19,7 +19,7 @@ class ElasticsearchData(BaseModel):
     genres: list[Genre]
     genre: list[str]
     title: str
-    description: Optional[str]
+    description: Optional[str | None]
     director: list[str]
     actors_names: list[str]
     writers_names: list[str]
